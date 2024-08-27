@@ -1,0 +1,29 @@
+import unittest
+from src.contact_manager import add_contact, display_contacts, remove_contact, contacts
+
+class TestContactManager(unittest.TestCase):
+    def setUp(self):
+        # Reset the contacts list before each test
+        contacts.clear()
+
+    def test_add_contact(self):
+        add_contact("Alice", "1234-5678", "alice@example.com")
+        self.assertEqual(len(contacts), 1)
+        self.assertEqual(contacts[0]['name'], "Alice")
+        self.assertEqual(contacts[0]['phone'], "1234-5678")
+        self.assertEqual(contacts[0]['email'], "alice@example.com")
+
+    def test_remove_contact(self):
+        add_contact("Alice", "1234-5678", "alice@example.com")
+        remove_contact("Alice")
+        self.assertEqual(len(contacts), 0)
+
+    def test_display_contacts(self):
+        add_contact("Alice", "1234-5678", "alice@example.com")
+        output = display_contacts()
+        self.assertIn("Alice", output)
+        self.assertIn("1234-5678", output)
+        self.assertIn("alice@example.com", output)
+
+if __name__ == "__main__":
+    unittest.main()
